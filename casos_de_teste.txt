@@ -1,0 +1,4 @@
+Casos de Borda - Etapa 1
+1. Vetor contendo apenas valores negativos: [-5, -2, -9, -1] -> Esperado: -1, [3, 3]
+2. Vetor de tamanho 1: [42] -> Esperado: 42, [0, 0]
+3. Empates: [2, 3, -10, 5, -10, 1, 4] -> Esperado: 5 (índices [0,1] ou [3,3] ou [5,6])
