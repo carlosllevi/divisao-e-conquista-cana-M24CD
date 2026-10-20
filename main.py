@@ -42,3 +42,52 @@ def subarranjo_dc(arr, esq, dir):
     if soma_e >= soma_d and soma_e >= soma_c: return soma_e, i_e, j_e
     elif soma_d >= soma_e and soma_d >= soma_c: return soma_d, i_d, j_d
     else: return soma_c, i_c, j_c
+
+import math
+
+# Etapa 2: Par de Pontos Mais Próximos
+def dist(p1, p2):
+    return math.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+
+def pontos_forca_bruta(pontos):
+    n = len(pontos)
+    min_d = float('inf')
+    par = None
+    for i in range(n):
+        for j in range(i + 1, n):
+            d = dist(pontos[i], pontos[j])
+            if d < min_d:
+                min_d = d
+                par = (pontos[i], pontos[j])
+    return min_d, par
+
+def pontos_dc_rec(pontos_x, pontos_y):
+    n = len(pontos_x)
+    if n <= 3: return pontos_forca_bruta(pontos_x)
+    
+    meio = n // 2
+    ponto_mid = pontos_x[meio]
+    
+    esq_x, dir_x = pontos_x[:meio], pontos_x[meio:]
+    esq_y = [p for p in pontos_y if p[0] <= ponto_mid[0]]
+    dir_y = [p for p in pontos_y if p[0] > ponto_mid[0]]
+    
+    d1, par1 = pontos_dc_rec(esq_x, esq_y)
+    d2, par2 = pontos_dc_rec(dir_x, dir_y)
+    d, par_min = (d1, par1) if d1 < d2 else (d2, par2)
+    
+    faixa = [p for p in pontos_y if abs(p[0] - ponto_mid[0]) < d]
+    
+    for i in range(len(faixa)):
+        for j in range(i + 1, min(i + 8, len(faixa))):
+            d_faixa = dist(faixa[i], faixa[j])
+            if d_faixa < d:
+                d = d_faixa
+                par_min = (faixa[i], faixa[j])
+                
+    return d, par_min
+
+def pontos_dc(pontos):
+    px = sorted(pontos, key=lambda x: x[0])
+    py = sorted(pontos, key=lambda x: x[1])
+    return pontos_dc_rec(px, py)
