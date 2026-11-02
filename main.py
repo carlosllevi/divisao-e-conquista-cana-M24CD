@@ -43,6 +43,28 @@ def subarranjo_dc(arr, esq, dir):
     elif soma_d >= soma_e and soma_d >= soma_c: return soma_d, i_d, j_d
     else: return soma_c, i_c, j_c
 
+def subarranjo_linear(arr):
+    n = len(arr)
+    if n == 0: return 0, -1, -1
+    
+    max_soma = float('-inf')
+    soma_atual = 0
+    inicio = fim = temp_inicio = 0
+    
+    for i in range(n):
+        soma_atual += arr[i]
+        
+        if soma_atual > max_soma:
+            max_soma = soma_atual
+            inicio = temp_inicio
+            fim = i
+            
+        if soma_atual < 0:
+            soma_atual = 0
+            temp_inicio = i + 1
+            
+    return max_soma, inicio, fim
+
 import math
 
 # Etapa 2: Par de Pontos Mais Próximos
