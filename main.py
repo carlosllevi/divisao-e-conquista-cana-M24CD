@@ -113,3 +113,38 @@ def pontos_dc(pontos):
     px = sorted(pontos, key=lambda x: x[0])
     py = sorted(pontos, key=lambda x: x[1])
     return pontos_dc_rec(px, py)
+
+if __name__ == "__main__":
+    print("--- Testando Casos de Borda: Etapa 1 ---")
+    
+    # 1. Apenas negativos
+    arr_negativo = [-5, -2, -9, -1]
+    print(f"1. Vetor apenas negativo {arr_negativo}:")
+    print("   Força Bruta:", subarranjo_forca_bruta(arr_negativo))
+    print("   Divisão e Conquista:", subarranjo_dc(arr_negativo, 0, len(arr_negativo)-1))
+    print("   Kadane (O(n)):", subarranjo_linear(arr_negativo))
+    
+    # 2. Tamanho 1
+    arr_um = [42]
+    print(f"\n2. Vetor de tamanho 1 {arr_um}:")
+    print("   Força Bruta:", subarranjo_forca_bruta(arr_um))
+    print("   Divisão e Conquista:", subarranjo_dc(arr_um, 0, len(arr_um)-1))
+    print("   Kadane (O(n)):", subarranjo_linear(arr_um))
+
+    # 3. Empates
+    arr_empate = [2, 3, -10, 5, -10, 1, 4]
+    print(f"\n3. Vetor com empates {arr_empate}:")
+    print("   Força Bruta:", subarranjo_forca_bruta(arr_empate))
+    print("   Divisão e Conquista:", subarranjo_dc(arr_empate, 0, len(arr_empate)-1))
+    print("   Kadane (O(n)):", subarranjo_linear(arr_empate))
+    
+    print("\n--- Testando Casos de Borda: Etapa 2 ---")
+    pontos1 = [(0, 0), (1, 1), (2, 2)]
+    print(f"1. Pontos {pontos1}:")
+    print("   Força Bruta:", pontos_forca_bruta(pontos1))
+    print("   Divisão e Conquista:", pontos_dc(pontos1))
+
+    pontos2 = [(0, 0), (1, 1), (1, 1.1)]
+    print(f"\n2. Pontos próximos {pontos2}:")
+    print("   Força Bruta:", pontos_forca_bruta(pontos2))
+    print("   Divisão e Conquista:", pontos_dc(pontos2))
